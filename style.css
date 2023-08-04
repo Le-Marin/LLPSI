@@ -12,6 +12,7 @@
   --heading-bdc: #bbb;
   --prompt-bg: #eee;
 }
+
 * {
   box-sizing: border-box;
 }
@@ -34,7 +35,7 @@ body::before {
   bottom: 10px;
   background: url("img/spqr.png") no-repeat right center / contain;
   pointer-events: none;
-  opacity: 0.2;
+  opacity: 0.125;
 }
 .container {
   max-width: 50em;
@@ -47,7 +48,7 @@ body::before {
   position: sticky;
   top: 0;
   color: var(--heading-fg);
-  background: var(--bg);
+  background-color: var(--bg);
   border-bottom: 1px solid var(--heading-bdc);
   z-index: 2;
 }
@@ -69,9 +70,14 @@ body::before {
 .image {
   height: 60vw;
   max-height: 300px;
-  margin-bottom: 2em;
   background: var(--img) no-repeat center / cover;
   box-shadow: inset 0 0 0 2px var(--bg), inset 0 0 8px 6px var(--bg);
+  filter: saturate(0.5);
+}
+.img {
+  max-width: 75%;
+  display: block;
+  margin: 0 auto;
   filter: saturate(0.5);
 }
 [style*="text-align: center"] b {
@@ -87,7 +93,8 @@ body::before {
 .word:hover {
   color: var(--word-selected-fg) !important;
 }
-.word > * {
+.word * {
+  color: inherit !important;
   pointer-events: none;
 }
 
@@ -99,11 +106,12 @@ body::before {
   position: absolute;
   left: 0;
   top: 0;
-  padding: .2em .5em;
+  padding: 0.2em 0.5em;
   background-color: var(--tip-bg);
   border: 2px solid var(--tip-bdc);
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
   transform: translate(var(--x), var(--y));
+  white-space: pre-line;
   pointer-events: none;
   user-select: none;
 }
@@ -114,7 +122,6 @@ body::before {
   color: var(--word-fg);
 }
 .notes {
-  margin-left: .5em;
   color: var(--note-fg);
 }
 .notes > i {
@@ -123,29 +130,4 @@ body::before {
 }
 .translation {
   font-size: .8em;
-  vertical-align: middle;
-  margin-left: .6em;
-  opacity: .85;
-}
-.tip-word:empty + span {
-  margin-left: 0;
-}
-
-@media (prefers-color-scheme: dark) {
-  :root {
-    color-scheme: dark;
-    --fg: #eaeaea;
-    --bg: #222;
-    --tip-bg: #1a1a1a;
-    --tip-bdc: #444;
-    --word-fg: darkseagreen;
-    --word-selected-fg: palegreen;
-    --note-fg: #d55038;
-    --heading-fg: #e5d2b9;
-    --heading-bdc: #3a3a3a;
-    --prompt-bg: #2c2c2c;
-  }
-  b, strong {
-    color: #fff;
-  }
 }

@@ -4,7 +4,7 @@
   loadScript('js/tip.js');
 
   if (location.protocol === 'file:') {
-    loadScript('js/edit.js');
+    loadScript('js/_edit.js');
   }
 
   function loadScript(src) {

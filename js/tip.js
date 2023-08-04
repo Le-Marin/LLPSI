@@ -1,33 +1,62 @@
 (function() {
   'use strict';
 
-  const wordReplacer = (match) => `<strong class="tip-word">${match}</strong>`;
+  const getWord = (value) => `<b class="tip-word">${value}</b>`;
+  const getNotes = (value) => `<span class="notes">${value}</span>`;
+  const getTranslation = (value) => `<span class="translation">${value}</span>`;
 
   const notesReplacer = (match) => {
     const value = match.slice(1).replace(/[(+/)]+/g, '<i>$&</i>');
-    return `<span class="notes">${value}</span>`;
+    return ` ${getNotes(value)}`;
   };
 
   const translationReplacer = (match) => {
     const value = match.slice(1).replace(/\/ (.+)/g, '/ <i>$1</i>');
-    return `<span class="translation">${value}</span>`;
+    return ` ${getTranslation(value)}`;
   };
 
   const handleWordValue = window.handleWordValue = (text) => {
-    return text
-      .replace(/[^:|]*/, wordReplacer)
-      .replace(/\|[^:]+/, notesReplacer)
+    const chunks = text.split('@');
+    const start = chunks.shift()
+      .replace(/^[^|:\n]+/, getWord)
+      .replace(/\|[^:\n]+/, notesReplacer)
       .replace(/:.+/, translationReplacer);
+
+    const end = chunks.length ? getMultiTranslation(chunks.join('\n')) : '';
+    return !end ? start : start + '\n' + getTranslation(end);
   };
 
-  const tip = ((elem) => {
-    elem.id = 'tip';
-    document.body.appendChild(elem);
+  function getMultiTranslation(value) {
+    return value
+      .replace(/\*(.+?)\*/g, getNotes('$1'))
+      .replace(/--(.+?)--/g, getWord('$1'))
+      .replace(/ \/ (.+)/g, ' / <i>$1</i>');
+  }
 
+  const tip = ((elem) => {
     const setCSS = elem.style.setProperty.bind(elem.style);
     const getClientWidth = () => document.documentElement.clientWidth;
 
+    function onTipFocus(e) {
+      const trg = e.target;
+      const text = trg.matches('.word') ? trg.dataset.value : '';
+
+      if (text) this.render(text).move(trg.getBoundingClientRect());
+      else this.hide();
+    }
+
     return {
+      __init__() {
+        onTipFocus = onTipFocus.bind(this);
+        this.hide = this.hide.bind(this);
+
+        document.addEventListener('mouseover', onTipFocus);
+        document.addEventListener('click', onTipFocus);
+        document.addEventListener('scroll', this.hide);
+
+        elem.id = 'tip';
+        document.body.appendChild(elem);
+      },
       get hidden() {
         return !elem.offsetWidth;
       },
@@ -43,19 +72,12 @@
       render(text = '') {
         elem.innerHTML = text && handleWordValue(text);
         return this;
+      },
+      hide() {
+        return !this.hidden && this.render();
       }
     };
   })(document.createElement('div'));
 
-  document.addEventListener('click', onTipFocus);
-  document.addEventListener('mouseover', onTipFocus);
-
-  function onTipFocus(e) {
-    const trg = e.target;
-    const text = trg.matches('.word') ? trg.dataset.value : '';
-
-    if (text) return tip.render(text).move(trg.getBoundingClientRect());
-
-    !tip.hidden && tip.render('');
-  }
+  tip.__init__();
 })();
