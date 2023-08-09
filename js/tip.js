@@ -6,7 +6,7 @@
   const getTranslation = (value) => `<span class="translation">${value}</span>`;
 
   const notesReplacer = (match) => {
-    const value = match.slice(1).replace(/[(+/)]+/g, '<i>$&</i>');
+    const value = match.slice(1).replace(/[(+/,)]+/g, '<i>$&</i>');
     return ` ${getNotes(value)}`;
   };
 
@@ -23,7 +23,7 @@
       .replace(/:.+/, translationReplacer);
 
     const end = chunks.length ? getMultiTranslation(chunks.join('\n')) : '';
-    return !end ? start : start + '\n' + getTranslation(end);
+    return !end ? start : (start + '\n' + getTranslation(end)).trim();
   };
 
   function getMultiTranslation(value) {
@@ -39,10 +39,9 @@
 
     function onTipFocus(e) {
       const trg = e.target;
-      const text = trg.matches('.word') ? trg.dataset.value : '';
 
-      if (text) this.render(text).move(trg.getBoundingClientRect());
-      else this.hide();
+      if (!trg.matches('.word')) this.hide();
+      else this.render(trg).move(trg.getBoundingClientRect());
     }
 
     return {
@@ -69,12 +68,16 @@
         setCSS('--x', `${~~x}px`);
         setCSS('--y', `${y + window.scrollY >> 0}px`);
       },
-      render(text = '') {
-        elem.innerHTML = text && handleWordValue(text);
+      render(trg) {
+        if (!trg.hasOwnProperty('__value')) {
+          trg.__value = handleWordValue(trg.dataset.value);
+        }
+        elem.innerHTML = trg.__value;
         return this;
       },
       hide() {
-        return !this.hidden && this.render();
+        if (this.hidden) return;
+        elem.innerHTML = '';
       }
     };
   })(document.createElement('div'));

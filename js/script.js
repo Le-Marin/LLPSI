@@ -1,7 +1,7 @@
 (function() {
   'use strict';
 
-  loadScript('js/tip.js');
+  loadScript('js/tip.js?v' + Date.now());
 
   if (location.protocol === 'file:') {
     loadScript('js/_edit.js');
