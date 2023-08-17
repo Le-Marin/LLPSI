@@ -6,7 +6,7 @@
   const getTranslation = (value) => `<span class="translation">${value}</span>`;
 
   const notesReplacer = (match) => {
-    const value = match.slice(1).replace(/[(+/,)]+/g, '<i>$&</i>');
+    const value = match.slice(1).replace(/[(+/,~)]+/g, '<i>$&</i>');
     return ` ${getNotes(value)}`;
   };
 
