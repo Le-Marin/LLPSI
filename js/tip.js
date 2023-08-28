@@ -23,12 +23,16 @@
       .replace(/:.+/, translationReplacer);
 
     const end = chunks.length ? getMultiTranslation(chunks.join('\n')) : '';
-    return !end ? start : (start + '\n' + getTranslation(end)).trim();
+    const val = !end ? start : (start + '\n' + getTranslation(end)).trim();
+
+    return val
+      .replace(/_(.+?)_/g, '<i>$1</i>')
+      .replace(/\*(.+?)\*/g, '<b>$1</b>');
   };
 
   function getMultiTranslation(value) {
     return value
-      .replace(/\*(.+?)\*/g, getNotes('$1'))
+      .replace(/\^(.+?)\^/g, getNotes('$1'))
       .replace(/--(.+?)--/g, getWord('$1'))
       .replace(/ \/ (.+)/g, ' / <i>$1</i>');
   }

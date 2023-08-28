@@ -1,16 +1,16 @@
-(function() {
-  'use strict';
+'use strict';
 
-  loadScript('js/tip.js?v' + Date.now());
+const basePath = 'https://le-marin.github.io/LLPSI/';
 
-  if (location.protocol === 'file:') {
-    loadScript('js/_edit.js');
-  }
+loadScript(basePath + 'js/tip.js?v=' + Date.now());
 
-  function loadScript(src) {
-    const script = document.createElement('script');
-    script.src = src;
-    document.head.appendChild(script);
-    script.remove();
-  }
-})();
+if (location.protocol === 'file:') {
+  loadScript('js/_edit.js');
+}
+
+function loadScript(src) {
+  const script = document.createElement('script');
+  script.src = src;
+  document.head.appendChild(script);
+  script.remove();
+}
