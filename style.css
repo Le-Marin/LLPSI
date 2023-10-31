@@ -1,13 +1,11 @@
 @import url("https://fonts.googleapis.com/css2?family=Ysabeau+Infant:ital,wght@0,500;0,700;1,500;1,700&display=swap");
 
 :root {
+  font-size: 0.625rem;
   --fg: #222;
   --bg: #fff;
-  --tip-bg: #eee;
-  --tip-bdc: #888;
   --word-fg: royalblue;
   --word-selected-fg: mediumblue;
-  --note-fg: brown;
   --heading-fg: #444;
   --heading-bdc: #bbb;
   --prompt-bg: #eee;
@@ -18,7 +16,7 @@
 }
 body {
   font-family: Arial, Helvetica, sans-serif;
-  font-size: 1.2rem;
+  font-size: 1.9rem;
   min-width: 320px;
   min-height: 100vh;
   margin: 0;
@@ -44,7 +42,7 @@ body::before {
 }
 .heading {
   margin: 0;
-  padding: .4em .5rem;
+  padding: .4em .8rem;
   position: sticky;
   top: 0;
   color: var(--heading-fg);
@@ -62,7 +60,7 @@ body::before {
   font-family: "Ysabeau Infant", Arial, Helvetica, sans-serif;
   font-weight: 500;
   line-height: 1.5;
-  padding: .5rem;
+  padding: .8rem;
   margin-top: 1em;
   text-align: justify;
   white-space: normal;
@@ -107,8 +105,8 @@ body::before {
   left: 0;
   top: 0;
   padding: 0.2em 0.5em;
-  background-color: var(--tip-bg);
-  border: 2px solid var(--tip-bdc);
+  background-color: #eee;
+  border: 2px solid #888;
   box-shadow: 2px 2px 2px rgba(0, 0, 0, 0.35);
   transform: translate(var(--x), var(--y));
   white-space: pre-line;
@@ -122,7 +120,7 @@ body::before {
   color: var(--word-fg);
 }
 .notes {
-  color: var(--note-fg);
+  color: brown;
 }
 .notes > i {
   font-style: normal;
@@ -130,4 +128,9 @@ body::before {
 }
 .translation {
   font-size: .8em;
+}
+
+pre {
+  max-width: 100%;
+  overflow-x: auto;
 }
