@@ -14,3 +14,13 @@ function loadScript(src) {
   script.src = src;
   document.head.appendChild(script).remove();
 }
+
+(function() {
+  const switcher = document.getElementById('refs-switcher');
+  const extraMenu = switcher.parentNode.nextElementSibling;
+
+  switcher.addEventListener('click', (e) => {
+    e.preventDefault();
+    extraMenu.classList.toggle('__shown');
+  });
+})();
