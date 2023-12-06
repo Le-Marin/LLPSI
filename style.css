@@ -112,6 +112,7 @@ body::before {
   white-space: pre-line;
   pointer-events: none;
   user-select: none;
+  z-index: 10;
 }
 #tip:empty {
   display: none;
