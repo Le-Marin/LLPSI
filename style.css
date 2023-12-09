@@ -165,10 +165,11 @@ pre {
   display: flex;
   align-items: center;
   justify-content: center;
+  filter: grayscale(.8);
 }
 .refs img {
   width: 100%;
-  filter: grayscale(.8);
+  pointer-events: none;
 }
 
 #refs-switcher {
@@ -177,7 +178,7 @@ pre {
   overflow: hidden;
   border-radius: 50%;
 }
-#refs-switcher:hover::before {
+#refs-switcher::before {
   content: "";
   position: absolute;
   left: 0;
@@ -187,7 +188,7 @@ pre {
   background-color: black;
   opacity: .35;
 }
-#refs-switcher:hover::after {
+#refs-switcher::after {
   content: "+";
   line-height: 1.5;
   position: absolute;

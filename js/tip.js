@@ -44,8 +44,13 @@
     function onTipFocus(e) {
       const trg = e.target;
 
-      if (!trg.matches('.word')) this.hide();
-      else this.render(trg).move(trg.getBoundingClientRect());
+      if (!trg.matches('[data-value]')) return this.hide();
+
+      if (e.type === 'touchstart') {
+        document.addEventListener('touchend', this.hide, { once: true });
+      }
+
+      this.render(trg).move(trg.getBoundingClientRect());
     }
 
     return {
@@ -54,6 +59,7 @@
         this.hide = this.hide.bind(this);
 
         document.addEventListener('mouseover', onTipFocus);
+        document.addEventListener('touchstart', onTipFocus);
         document.addEventListener('click', onTipFocus);
         document.addEventListener('scroll', this.hide);
 
